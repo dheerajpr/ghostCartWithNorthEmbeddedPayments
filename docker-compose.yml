@@ -1,0 +1,22 @@
+services:
+  server:
+    build: ./server
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+  client:
+    build: ./client
+    ports:
+      - "3006:3006"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - server
+    environment:
+      - VITE_API_URL=http://localhost:3004

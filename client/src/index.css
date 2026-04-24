@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #0A0A0F;
+  color: #E2E2E2;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #0A0A0F;
+  background-image: radial-gradient(circle at 50% 50%, #12121A 0%, #0A0A0F 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  width: 100%;
+  flex: 1;
+}
+
+.glass-morphism {
+  background: rgba(18, 18, 26, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.neon-border {
+  border: 1px solid #00E5FF;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+/* Force North iFrame to expand */
+#north-checkout-container iframe {
+  height: 600px !important;
+  width: 100% !important;
+  border: none !important;
+}
