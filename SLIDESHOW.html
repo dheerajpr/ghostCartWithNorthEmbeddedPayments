@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>The Ghost Cart - North Embedded Checkout</title>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+
+        <style>
+            :root {
+                --neon: #00f3ff;
+                --cyber-bg: #050505;
+            }
+            .reveal {
+                background-color: var(--cyber-bg);
+                color: #fff;
+            }
+            .reveal h1, .reveal h2, .reveal h3 {
+                color: #fff;
+                text-transform: uppercase;
+                font-weight: 900;
+                letter-spacing: -0.05em;
+                font-style: italic;
+            }
+            .reveal h1 span, .reveal h2 span {
+                color: var(--neon);
+            }
+            .reveal .controls { color: var(--neon); }
+            .reveal .progress { color: var(--neon); }
+            
+            .border-neon {
+                border: 1px solid rgba(0, 243, 255, 0.3) !important;
+                box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+                border-radius: 15px;
+                padding: 40px !important;
+                background: rgba(255,255,255,0.03);
+            }
+            .highlight {
+                color: var(--neon);
+                font-weight: bold;
+            }
+            ul {
+                list-style-type: none !important;
+                margin-left: 0 !important;
+            }
+            li::before {
+                content: "⚡ ";
+                color: var(--neon);
+            }
+        </style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <!-- Slide 1 -->
+				<section>
+                    <h3 style="font-size: 0.8em; opacity: 0.6; letter-spacing: 0.3em;">Hackathon: Ghost Cart Demo</h3>
+					<h1>The <span>Ghost</span> Cart</h1>
+					<p>Mastering the <span>North Embedded Checkout</span></p>
+                    <div style="margin-top: 40px; font-size: 0.5em; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.2em;">
+                        Eliminating Friction in Service Payments
+                    </div>
+				</section>
+
+                <!-- Slide 2 -->
+				<section>
+					<h2>What is a <span>Ghost Cart</span>?</h2>
+                    <div class="border-neon">
+                        <p>Services don't need carts. They need <strong>Direct Action</strong>.</p>
+                        <ul style="font-size: 0.8em;">
+                            <li>Eliminates traditional checkout steps.</li>
+                            <li>Accepts payment without navigating to new pages.</li>
+                            <li>Turns qualification directly into a transaction.</li>
+                        </ul>
+                    </div>
+				</section>
+
+                <!-- Slide 3 -->
+				<section>
+					<h2>The <span>Service</span> Advantage</h2>
+					<p style="font-size: 0.7em;">Why this is a game-changer for service businesses:</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="border-neon" style="font-size: 0.6em;">
+                            <h3 style="font-size: 1.2em;">Traditional Cart</h3>
+                            <p style="opacity: 0.6;">Add to Cart → View Cart → Billing → Shipping → Confirm</p>
+                            <p class="highlight">70% Cart Abandonment</p>
+                        </div>
+                        <div class="border-neon" style="font-size: 0.6em;">
+                            <h3 style="font-size: 1.2em;">Ghost Cart</h3>
+                            <p>Qualify Service → <strong>Pay Now</strong> → Dispatch</p>
+                            <p class="highlight">Frictionless Conversion</p>
+                        </div>
+                    </div>
+				</section>
+
+                <!-- Slide 4 -->
+				<section>
+					<h2>Extreme <span>Ease</span> of Setup</h2>
+					<p style="font-size: 0.8em;">The fastest integration in this hackathon.</p>
+                    <ul style="font-size: 0.7em;">
+                        <li><strong>Developer Friendly:</strong> Intuitive API for session creation.</li>
+                        <li><strong>Minimal Boilerplate:</strong> No complex SDK setup required.</li>
+                        <li><strong>Rapid Deployment:</strong> From zero to live payments in minutes.</li>
+                    </ul>
+				</section>
+
+                <!-- Slide 5 -->
+				<section>
+					<h2>Implementation <span>Blueprint</span></h2>
+                    <div class="border-neon">
+                        <pre><code class="javascript" data-trim>
+// 1. Backend: Simple Session API Handshake
+const response = await fetch('north.com/api/sessions', {
+  method: 'POST',
+  body: JSON.stringify({ amount: 199.00 })
+});
+
+// 2. Frontend: One-line Mounting
+window.checkout.mount(token, 'container-id');
+                        </code></pre>
+                        <p style="font-size: 0.6em; opacity: 0.7;">Seamlessly connecting logic and aesthetics.</p>
+                    </div>
+				</section>
+
+                <!-- Slide 6 -->
+				<section>
+					<h2>Tech <span>Stack</span></h2>
+                    <div style="display: flex; justify-content: space-around; align-items: center;">
+                        <div style="font-size: 0.6em;">
+                            <p class="highlight">FRONTEND</p>
+                            <p>React / TypeScript<br>Vite / Tailwind CSS</p>
+                        </div>
+                        <div style="font-size: 0.6em;">
+                            <p class="highlight">PAYMENT ENGINE</p>
+                            <p>North Embedded Checkout</p>
+                        </div>
+                        <div style="font-size: 0.6em;">
+                            <p class="highlight">BACKEND</p>
+                            <p>Node.js / Express</p>
+                        </div>
+                    </div>
+				</section>
+
+                <!-- Slide 7 -->
+				<section>
+					<h1>Summary</h1>
+					<p style="font-size: 0.8em; opacity: 0.8;">North's Embedded Checkout is built for developers who care about <span>User Experience</span>.</p>
+                    <div style="margin-top: 50px; color: var(--neon); font-family: monospace; font-size: 1.2em;">
+                        Useful. Easy. Frictionless.
+                    </div>
+				</section>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+                transition: 'convex',
+                backgroundTransition: 'zoom'
+			});
+		</script>
+	</body>
+</html>
