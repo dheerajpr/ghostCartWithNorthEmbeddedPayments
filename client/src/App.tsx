@@ -14,11 +14,16 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004';
 const App: React.FC = () => {
   const [address, setAddress] = useState('');
   const [zipCode, setZipCode] = useState('');
+  const [systemType, setSystemType] = useState<string>('');
+  const [maintenanceChecked, setMaintenanceChecked] = useState(false);
   const [status, setStatus] = useState<'idle' | 'validating' | 'qualified' | 'rejected'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [sessionData, setSessionData] = useState<any>(null);
   const [showCheckout, setShowCheckout] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'Approved' | 'Declined' | null>(null);
+  const [confirmationCode, setConfirmationCode] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const checkoutRef = useRef<HTMLDivElement>(null);
   const mountedRef = useRef(false);
 
   useEffect(() => {
@@ -50,9 +55,36 @@ const App: React.FC = () => {
       }, 100);
 
       // Listen for payment completion
-      const unsubscribe = window.checkout.onPaymentComplete((response: any) => {
+      const unsubscribe = window.checkout.onPaymentComplete(async (response: any) => {
         console.log('Payment Event:', response);
-        setPaymentStatus(response.status);
+        
+        try {
+          // Verify with the backend
+          const statusResponse = await fetch(`${API_URL}/api/sessions/status`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: sessionData.token }),
+          });
+
+          console.info(statusResponse)
+          
+          if (statusResponse.ok) {
+            const data = await statusResponse.json();
+            setPaymentStatus(data.status);
+            if (data.status === 'Approved') {
+                setShowCheckout(false);
+                // Generate a professional dispatch confirmation code
+                const randomPart = Math.random().toString(36).substring(2, 5).toUpperCase();
+                const numericPart = Math.floor(100 + Math.random() * 900);
+                setConfirmationCode(`ARC-${numericPart}-${randomPart}`);
+            }
+          } else {
+            setPaymentStatus(response.status);
+          }
+        } catch (err) {
+          console.error('Status verification failed', err);
+          setPaymentStatus(response.status);
+        }
       });
 
       return () => {
@@ -62,28 +94,39 @@ const App: React.FC = () => {
     }
   }, [showCheckout, sessionData]);
 
+  // Scroll to checkout when it appears
+  useEffect(() => {
+    if (showCheckout && checkoutRef.current) {
+      checkoutRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [showCheckout]);
+
   const handleValidate = async () => {
-    if (!zipCode) return;
+    if (!zipCode || !systemType || !maintenanceChecked) return;
     setStatus('validating');
+    setErrorMessage(null);
     
     try {
       const response = await fetch(`${API_URL}/api/sessions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address, zipCode }),
+        body: JSON.stringify({ address, zipCode, systemType }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        const data = await response.json();
         setSessionData(data);
         setStatus('qualified');
         // Trigger the "Ghost Reveal" after a short delay
         setTimeout(() => setShowCheckout(true), 800);
       } else {
+        setErrorMessage(data.error || 'Area not serviceable');
         setStatus('rejected');
       }
     } catch (error) {
       console.error('Validation failed', error);
+      setErrorMessage('Verification system offline');
       setStatus('rejected');
     }
   };
@@ -131,6 +174,25 @@ const App: React.FC = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
+            
+            <div>
+              <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-3 block">What system type are we servicing?</label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {['Central Air', 'Heat Pump', 'Boiler/Radiator'].map((type) => (
+                  <label key={type} className={`flex items-center justify-center p-3 rounded-lg border cursor-pointer transition-all ${systemType === type ? 'bg-neon/10 border-neon text-neon' : 'bg-cyber-surface border-cyber-border text-gray-400 hover:border-gray-600'}`}>
+                    <input 
+                      type="radio"
+                      name="systemType"
+                      value={type}
+                      className="hidden"
+                      onChange={(e) => setSystemType(e.target.value)}
+                    />
+                    <span className="text-[10px] font-bold uppercase tracking-tighter">{type}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
             <div>
               <label className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1 block">Postal Code</label>
               <div className="flex gap-2">
@@ -141,15 +203,29 @@ const App: React.FC = () => {
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
                 />
-                <button 
-                  onClick={handleValidate}
-                  disabled={status === 'validating'}
-                  className="bg-neon text-black font-black uppercase px-6 rounded-lg hover:bg-neon/90 transition-all flex items-center gap-2 disabled:opacity-50"
-                >
-                  {status === 'validating' ? 'Checking...' : 'Verify'}
-                </button>
               </div>
             </div>
+
+            <div className="flex items-start gap-3 py-2">
+              <input 
+                type="checkbox"
+                id="maintenance"
+                className="mt-1 w-4 h-4 rounded border-cyber-border bg-cyber-surface text-neon focus:ring-neon focus:ring-offset-cyber-bg"
+                checked={maintenanceChecked}
+                onChange={(e) => setMaintenanceChecked(e.target.checked)}
+              />
+              <label htmlFor="maintenance" className="text-[10px] uppercase font-bold text-gray-400 leading-tight cursor-pointer tracking-wider">
+                I have checked my breaker box and air filters. <span className="text-neon">*</span>
+              </label>
+            </div>
+
+            <button 
+              onClick={handleValidate}
+              disabled={status === 'validating' || !zipCode || !systemType || !maintenanceChecked}
+              className="w-full bg-neon text-black font-black uppercase py-4 rounded-lg hover:bg-neon/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {status === 'validating' ? 'Verifying Grid Sector...' : 'Access Dispatch Engine'}
+            </button>
           </div>
         </motion.div>
 
@@ -157,6 +233,7 @@ const App: React.FC = () => {
         <AnimatePresence>
           {status === 'qualified' && (
             <motion.div
+              ref={checkoutRef}
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               className="relative"
@@ -187,7 +264,7 @@ const App: React.FC = () => {
                 >
                   <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
                   <h2 className="text-2xl font-black text-white uppercase italic">Dispatch Confirmed</h2>
-                  <p className="text-gray-400 text-xs mt-2 font-mono">Reference: {sessionData?.token}</p>
+                  <p className="text-gray-400 text-xs mt-2 font-mono tracking-widest">CONFIRMATION: <span className="text-neon">{confirmationCode}</span></p>
                 </motion.div>
               )}
 
@@ -234,9 +311,14 @@ const App: React.FC = () => {
               className="glass-morphism p-8 rounded-2xl border border-red-500/30 text-center"
             >
               <AlertTriangle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-              <h2 className="text-xl font-bold text-white uppercase italic">Out of Service Zone</h2>
+              <h2 className="text-xl font-bold text-white uppercase italic">Sector Unserviceable</h2>
+              {errorMessage && (
+                <p className="text-red-400 text-[10px] font-black uppercase tracking-[0.2em] mb-4 bg-red-500/10 py-2 rounded border border-red-500/20">
+                  Error: {errorMessage}
+                </p>
+              )}
               <p className="text-gray-400 text-sm mt-2 mb-6">
-                Arctic Air hasn't expanded to your grid sector yet. Join the priority waitlist for early access.
+                Arctic Air hasn't expanded to your grid sector for this service type yet. Join the priority waitlist.
               </p>
               
               <div className="flex gap-2">
@@ -257,7 +339,7 @@ const App: React.FC = () => {
       <footer className="mt-auto pt-12 text-center">
         <div className="flex items-center gap-4 text-gray-700">
           <span className="h-[1px] w-8 bg-gray-800" />
-          <span className="text-[8px] uppercase tracking-[0.4em] font-black">Powered by North Protocol</span>
+          <span className="text-[8px] uppercase tracking-[0.4em] font-black">Powered by North Payments</span>
           <span className="h-[1px] w-8 bg-gray-800" />
         </div>
       </footer>
