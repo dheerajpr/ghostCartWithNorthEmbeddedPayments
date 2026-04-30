@@ -1,4 +1,4 @@
-# 👻 Ghost Cart | Arctic Air HVAC
+# 👻 Ghost Cart
 
 A qualification-first checkout engine powered by **North Payments**. Ghost Cart ensures you only collect payments from serviceable customers through a "Ghost Gate" verification system.
 
