@@ -6,6 +6,10 @@
 
 		<title>The Ghost Cart - North Embedded Checkout</title>
 
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
@@ -18,38 +22,134 @@
             .reveal {
                 background-color: var(--cyber-bg);
                 color: #fff;
+                font-family: 'Inter', sans-serif;
             }
             .reveal h1, .reveal h2, .reveal h3 {
                 color: #fff;
                 text-transform: uppercase;
-                font-weight: 900;
-                letter-spacing: -0.05em;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                font-family: 'Urbanist', sans-serif;
                 font-style: italic;
             }
-            .reveal h1 span, .reveal h2 span {
+            .reveal h1 span, .reveal h2 span, .reveal h3 span {
                 color: var(--neon);
             }
             .reveal .controls { color: var(--neon); }
             .reveal .progress { color: var(--neon); }
             
             .border-neon {
-                border: 1px solid rgba(0, 243, 255, 0.3) !important;
-                box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
-                border-radius: 15px;
+                border: 1px solid rgba(0, 243, 255, 0.2) !important;
+                box-shadow: 0 0 30px rgba(0, 243, 255, 0.05);
+                border-radius: 20px;
                 padding: 40px !important;
-                background: rgba(255,255,255,0.03);
+                background: rgba(255,255,255,0.02);
+                backdrop-filter: blur(10px);
             }
             .highlight {
                 color: var(--neon);
-                font-weight: bold;
+                font-weight: 600;
             }
-            ul {
-                list-style-type: none !important;
-                margin-left: 0 !important;
+            
+            .subtitle { font-size: 22px !important; color: #94a3b8 !important; text-align: center; margin-top: 15px !important; font-weight: 300; }
+
+            .content-area {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
             }
-            li::before {
-                content: "⚡ ";
+
+            .two-column.tiled {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+                align-items: stretch;
+            }
+
+            .two-column.tiled > div {
+                background: rgba(255, 255, 255, 0.03);
+                padding: 35px;
+                border-radius: 24px;
+                border: 1px solid rgba(0, 243, 255, 0.1);
+                text-align: left;
+            }
+
+            .tiled-grid {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .tile {
+                background: rgba(255, 255, 255, 0.04);
+                padding: 20px;
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .tile .icon {
+                font-size: 28px;
                 color: var(--neon);
+                margin-bottom: 12px;
+                display: block;
+            }
+
+            .tile h3 { font-size: 0.9em !important; color: var(--neon) !important; margin-bottom: 8px !important; line-height: 1.2 !important; letter-spacing: 0.1em !important; font-style: italic; }
+            .tile p { font-size: 0.55em !important; line-height: 1.4; color: #cbd5e1; margin: 0 !important; font-weight: 300; }
+
+            .icon-hero {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 130px;
+                color: var(--neon);
+                opacity: 0.9;
+                background: radial-gradient(circle, rgba(0, 243, 255, 0.15) 0%, transparent 70%);
+                border-radius: 50%;
+            }
+
+            .reveal ul { list-style: none !important; margin-left: 0 !important; }
+            .reveal li { position: relative; padding-left: 35px !important; margin-bottom: 12px !important; font-size: 0.5em !important; text-align: left; font-weight: 300; color: #e2e8f0; }
+            .reveal li strong { font-weight: 600; color: #fff; }
+            .reveal li i {
+                position: absolute;
+                left: 0;
+                top: 4px;
+                color: var(--neon);
+                font-size: 14px;
+            }
+            .reveal li::before { content: none; }
+
+            .title-layout { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; }
+            
+            h2.slide-title {
+                font-size: 1.2em !important;
+                margin-bottom: 40px !important;
+                border-left: 4px solid var(--neon);
+                padding-left: 24px !important;
+                width: 100%;
+                text-align: left;
+                font-style: italic;
+            }
+
+            .flicker {
+                animation: flicker 2s infinite;
+            }
+            @keyframes flicker {
+                0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                    opacity: 1;
+                    text-shadow: 0 0 20px var(--neon);
+                }
+                20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                    opacity: 0.4;
+                    text-shadow: none;
+                }
             }
         </style>
 	</head>
@@ -58,39 +158,36 @@
 			<div class="slides">
                 <!-- Slide 1 -->
 				<section>
-                    <h3 style="font-size: 0.8em; opacity: 0.6; letter-spacing: 0.3em;">Hackathon: Ghost Cart Demo</h3>
-					<h1>The <span>Ghost</span> Cart</h1>
-					<p>Demoing the <span>North Embedded Checkout</span></p>
-                    <div style="margin-top: 40px; font-size: 0.5em; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.6;">
+                    <h3 style="font-size: 0.6em; opacity: 0.5; letter-spacing: 0.4em; font-weight: 400; font-style: italic;">Hackathon: Ghost Cart Demo</h3>
+					<h1 style="font-size: 2.2em;">The <span>Ghost</span> Cart</h1>
+					<p style="font-weight: 300; opacity: 0.8; font-size: 0.8em;">Demoing the <span>North Embedded Checkout</span></p>
+                    <div style="margin-top: 50px; font-size: 0.4em; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.2em; line-height: 1.8; font-weight: 400;">
                         <strong>Dheeraj Peddi</strong> - Product Engineer, Lead - North<br>
                         <strong>Fanchon Huzzie</strong> - Sales Acceleration Analyst - Inovio Payments<br>
                         <strong>Krishna Swargam</strong> - Busnss Intel Arch, Sr - North
-                    </div>
-                    <div style="margin-top: 30px; font-size: 0.4em; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.2em;">
-                        Eliminating Friction in Service Payments
                     </div>
 				</section>
 
                 <!-- Slide 2: The Ghost Cart & Lead Filter -->
 				<section>
-					<h2>The <span>Ghost Cart</span> Experience</h2>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div class="border-neon" style="font-size: 0.6em;">
-                            <h3 style="font-size: 1.2em;">What is it?</h3>
-                            <p>Services don't need carts. They need <strong>Direct Action</strong>.</p>
-                            <ul style="margin-top: 10px;">
-                                <li>Eliminates traditional checkout steps.</li>
-                                <li>Payment without navigation.</li>
-                                <li>Qualification → Transaction.</li>
+					<h2 style="margin-bottom: 50px; font-size: 1.6em;">The <span>Ghost Cart</span> Experience</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto;">
+                        <div class="border-neon" style="font-size: 0.6em; text-align: left;">
+                            <h3 style="font-size: 1.2em; margin-bottom: 20px; color: var(--neon); font-style: italic;">What is it?</h3>
+                            <p style="font-weight: 300; margin-bottom: 20px; line-height: 1.6;">Services don't need carts. They need <strong style="color: #fff; font-weight: 600;">Direct Action</strong>.</p>
+                            <ul>
+                                <li><i class="fa-solid fa-bolt"></i> Eliminates traditional checkout steps.</li>
+                                <li><i class="fa-solid fa-bolt"></i> Payment without navigation.</li>
+                                <li><i class="fa-solid fa-bolt"></i> Qualification → Transaction.</li>
                             </ul>
                         </div>
-                        <div class="border-neon" style="font-size: 0.6em;">
-                            <h3 style="font-size: 1.2em;">The Lead Filter</h3>
-                            <p>Ghost Cart <strong>Protects</strong> your time by driving away noise.</p>
-                            <ul style="margin-top: 10px;">
-                                <li>Early disqualification.</li>
-                                <li>Hides checkout from non-serviceable leads.</li>
-                                <li>Focus on ready-to-pay customers.</li>
+                        <div class="border-neon" style="font-size: 0.6em; text-align: left;">
+                            <h3 style="font-size: 1.2em; margin-bottom: 20px; color: var(--neon); font-style: italic;">The Lead Filter</h3>
+                            <p style="font-weight: 300; margin-bottom: 20px; line-height: 1.6;">Ghost Cart <strong style="color: #fff; font-weight: 600;">Protects</strong> your time by driving away noise.</p>
+                            <ul>
+                                <li><i class="fa-solid fa-shield-halved"></i> Early disqualification.</li>
+                                <li><i class="fa-solid fa-shield-halved"></i> Hides checkout from non-serviceable leads.</li>
+                                <li><i class="fa-solid fa-shield-halved"></i> Focus on ready-to-pay customers.</li>
                             </ul>
                         </div>
                     </div>
@@ -98,17 +195,17 @@
 
                 <!-- Slide 3 -->
 				<section>
-					<h2>The <span>Service</span> Advantage</h2>
-					<p style="font-size: 0.7em;">Why this is a game-changer for service businesses:</p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+					<h2 style="font-size: 1.6em;">The <span>Service</span> Advantage</h2>
+					<p style="font-size: 0.6em; font-weight: 300; opacity: 0.7; margin-bottom: 30px;">Why this is a game-changer for service businesses:</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 900px; margin: 0 auto;">
                         <div class="border-neon" style="font-size: 0.6em;">
-                            <h3 style="font-size: 1.2em;">Traditional Cart</h3>
-                            <p style="opacity: 0.6;">Add to Cart → View Cart → Billing → Shipping → Confirm</p>
-                            <p class="highlight">70% Cart Abandonment</p>
+                            <h3 style="font-size: 1.1em; margin-bottom: 15px; opacity: 0.6; font-style: italic;">Traditional Cart</h3>
+                            <p style="opacity: 0.5; font-size: 0.7em; margin-bottom: 15px;">Add to Cart → Billing → Confirm</p>
+                            <p class="highlight" style="color: #ff4d4d;">70% Cart Abandonment</p>
                         </div>
                         <div class="border-neon" style="font-size: 0.6em;">
-                            <h3 style="font-size: 1.2em;">Ghost Cart</h3>
-                            <p>Qualify Service → <strong>Pay Now</strong> → Get Service</p>
+                            <h3 style="font-size: 1.1em; margin-bottom: 15px; font-style: italic;">Ghost Cart</h3>
+                            <p style="font-weight: 300; font-size: 0.7em; margin-bottom: 15px;">Qualify → <strong style="color: #fff;">Pay Now</strong> → Done</p>
                             <p class="highlight">Frictionless Conversion</p>
                         </div>
                     </div>
@@ -116,52 +213,124 @@
 
                 <!-- Slide 4 -->
 				<section>
-					<h2>Tech <span>Stack</span></h2>
-                    <p style="font-size: 0.6em; margin-bottom: 30px;">Built autonomously with <span class="highlight">Gemini CLI</span></p>
-                    <div style="display: flex; justify-content: space-around; align-items: center;">
-                        <div style="font-size: 0.6em;">
-                            <p class="highlight">FRONTEND</p>
-                            <p>React / TypeScript<br>Vite / Tailwind CSS</p>
+					<h2 style="font-size: 1.6em;">Tech <span>Stack</span></h2>
+                    <p style="font-size: 0.55em; margin-bottom: 40px; font-weight: 300; opacity: 0.7;">Built autonomously with <span class="highlight">Gemini CLI</span></p>
+                    <div style="display: flex; justify-content: space-around; align-items: center; max-width: 800px; margin: 0 auto;">
+                        <div style="font-size: 0.55em;">
+                            <p class="highlight" style="margin-bottom: 12px; letter-spacing: 0.2em;">FRONTEND</p>
+                            <p style="font-weight: 300; line-height: 1.5;">React / TypeScript<br>Vite / Tailwind CSS</p>
                         </div>
-                        <div style="font-size: 0.6em;">
-                            <p class="highlight">PAYMENT ENGINE</p>
-                            <p>North Embedded Checkout</p>
+                        <div style="font-size: 0.55em;">
+                            <p class="highlight" style="margin-bottom: 12px; letter-spacing: 0.2em;">PAYMENT ENGINE</p>
+                            <p style="font-weight: 300; line-height: 1.5;">North Embedded Checkout</p>
                         </div>
-                        <div style="font-size: 0.6em;">
-                            <p class="highlight">BACKEND</p>
-                            <p>Node.js / Express</p>
+                        <div style="font-size: 0.55em;">
+                            <p class="highlight" style="margin-bottom: 12px; letter-spacing: 0.2em;">BACKEND</p>
+                            <p style="font-weight: 300; line-height: 1.5;">Node.js / Express</p>
                         </div>
                     </div>
 				</section>
 
                 <!-- Slide 5: Demo -->
 				<section>
-					<h1 class="flicker" style="font-size: 3.5em;"><span>DEMO</span></h1>
-                    <style>
-                        .flicker {
-                            animation: flicker 2s infinite;
-                        }
-                        @keyframes flicker {
-                            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
-                                opacity: 1;
-                                text-shadow: 0 0 20px var(--neon);
-                            }
-                            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
-                                opacity: 0.4;
-                                text-shadow: none;
-                            }
-                        }
-                    </style>
+					<h1 class="flicker" style="font-size: 3em;"><span>DEMO</span></h1>
 				</section>
 
-                <!-- Slide 6 -->
-				<section>
-					<h1>Summary</h1>
-					<p style="font-size: 0.8em; opacity: 0.8;">North's Embedded Checkout is built for developers who care about <span>User Experience</span>.</p>
-                    <div style="margin-top: 50px; color: var(--neon); font-family: monospace; font-size: 1.2em;">
-                        Useful. Easy. Frictionless.
+                <!-- Slide 7 -->
+                <section>
+                    <div class="title-layout">
+                        <h1 style="font-size: 2.4em;">A STRATEGIC <span>WIN-WIN</span></h1>
+                        <p class="subtitle">Ghost Cart & North Embedded Payments: Redefining the Service Transaction Lifecycle.</p>
                     </div>
-				</section>
+                </section>
+
+                <!-- Slide 8 -->
+                <section>
+                    <h2 class="slide-title">THE STRATEGIC <span>WIN-WIN</span> DYNAMIC</h2>
+                    <div class="content-area">
+                        <div class="two-column tiled">
+                            <div>
+                                <h3 style="font-size: 0.9em !important;"><i class="fa-solid fa-briefcase" style="margin-right: 12px; color: var(--neon);"></i>THE MERCHANT <span>ADVANTAGE</span></h3>
+                                <ul>
+                                    <li><i class="fa-solid fa-circle-check"></i><strong>100% Quality Leads:</strong> Focus on ready-to-pay customers.</li>
+                                    <li><i class="fa-solid fa-circle-check"></i><strong>Conversion Velocity:</strong> Capture revenue at the peak of intent.</li>
+                                    <li><i class="fa-solid fa-circle-check"></i><strong>Operational Alpha:</strong> Automated dispatching reduces overhead.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 style="font-size: 0.9em !important;"><i class="fa-solid fa-user-check" style="margin-right: 12px; color: var(--neon);"></i>THE CUSTOMER <span>PROMISE</span></h3>
+                                <ul>
+                                    <li><i class="fa-solid fa-circle-check"></i><strong>Zero Wasted Time:</strong> Immediate confirmation of availability.</li>
+                                    <li><i class="fa-solid fa-circle-check"></i><strong>Instant Resolution:</strong> From need to paid booking in seconds.</li>
+                                    <li><i class="fa-solid fa-circle-check"></i><strong>Premium Trust:</strong> A frictionless checkout experience via North.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Slide 9 -->
+                <section>
+                    <h2 class="slide-title">BOUNDLESS MARKET <span>APPLICABILITY</span></h2>
+                    <div class="content-area">
+                        <div class="tiled-grid">
+                            <div class="tile">
+                                <span class="icon"><i class="fa-solid fa-utensils"></i></span>
+                                <h3>HOSPITALITY</h3>
+                                <p>Exclusive Chef-level bookings, beach club VIP reservations, and high-value dining deposits.</p>
+                            </div>
+                            <div class="tile">
+                                <span class="icon"><i class="fa-solid fa-truck-medical"></i></span>
+                                <h3>EMERGENCY</h3>
+                                <p>Mobile auto-repair, emergency plumbing, and locksmiths where proximity is critical.</p>
+                            </div>
+                            <div class="tile">
+                                <span class="icon"><i class="fa-solid fa-gavel"></i></span>
+                                <h3>PROFESSIONAL</h3>
+                                <p>Attorney consultations, medical specialist bookings, and specialized financial advisory.</p>
+                            </div>
+                            <div class="tile">
+                                <span class="icon"><i class="fa-solid fa-spa"></i></span>
+                                <h3>WELLNESS</h3>
+                                <p>Med Spa procedures, personal training sessions, and boutique fitness reservations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Slide 10 -->
+                <section>
+                    <h2 class="slide-title">FRICTIONLESS <span>REPEAT</span> BUSINESS</h2>
+                    <div class="content-area">
+                        <div class="two-column tiled" style="background: none; border: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                            <div style="background: none; border: none; padding: 0;">
+                                <h3 style="font-size: 1.1em !important;">THE SAVED CARD <span>ADVANTAGE</span></h3>
+                                <p style="font-size: 0.55em; color: #cbd5e1; font-weight: 300; margin-bottom: 20px;">Card on File capabilities transform one-time buyers into lifetime clients.</p>
+                                <ul>
+                                    <li><i class="fa-solid fa-bolt"></i><strong>True One-Click Bookings.</strong></li>
+                                    <li><i class="fa-solid fa-shield-halved"></i><strong>Secure Tokenized Storage.</strong></li>
+                                    <li><i class="fa-solid fa-rotate"></i><strong>Seamless Subscription Revenue.</strong></li>
+                                </ul>
+                            </div>
+                            <div class="icon-hero">
+                                <i class="fa-solid fa-handshake"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Slide 11 -->
+                <section>
+                    <div class="title-layout">
+                        <h1 style="font-size: 2.8em;"><span>CONCLUSION</span></h1>
+                        <p class="subtitle" style="max-width: 800px; font-size: 28px; color: #ffffff; line-height: 1.4;">
+                            With Ghost Cart+North Embed Payments Quality first, Charge second and loose nothing.
+                        </p>
+                        <div style="margin-top: 60px; font-size: 18px; color: #64748b; letter-spacing: 0.3em; font-weight: 400; font-style: italic;">
+                            THANK YOU FOR YOUR TIME
+                        </div>
+                    </div>
+                </section>
 			</div>
 		</div>
 
@@ -170,7 +339,12 @@
 			Reveal.initialize({
 				hash: true,
                 transition: 'convex',
-                backgroundTransition: 'zoom'
+                backgroundTransition: 'zoom',
+                width: 1280,
+                height: 720,
+                margin: 0.1,
+                minScale: 0.2,
+                maxScale: 2.0
 			});
 		</script>
 	</body>
